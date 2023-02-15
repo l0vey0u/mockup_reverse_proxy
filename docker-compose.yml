@@ -18,10 +18,10 @@ services:
     environment:
       - TZ=Asia/Seoul
     depends_on:
-      - fastapi
-  fastapi:
-    container_name: fastapi
-    build: ./fastapi
+      - bubble
+  bubble:
+    container_name: bubble
+    build: ./bubble
     restart: always
     expose:
       - "8000"

@@ -1,0 +1,23 @@
+FROM ubuntu:20.04
+
+RUN apt update -y
+RUN apt-get install -y python3-pip python-dev build-essential
+RUN apt install -y xxd
+RUN apt-get install -y bsdmainutils
+RUN pip install flask
+
+RUN mkdir -p /app
+COPY ./static /app/static/
+COPY ./templates /app/templates/
+COPY ./flag /flag
+COPY ./app.py /app
+
+RUN chmod 444 /flag
+
+RUN useradd -s /bin/bash jiheon
+
+USER jiheon
+
+RUN cd ./app
+
+CMD [ "python3", "/app/app.py" ]
