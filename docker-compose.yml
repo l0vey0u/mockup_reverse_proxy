@@ -1,0 +1,29 @@
+version: '3.7'
+
+networks:
+  proxy-network:
+    driver: bridge
+
+services:
+  nginx:
+    container_name: nginx
+    image: nginx:stable-alpine
+    restart: always
+    ports:
+      - "8090:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - proxy-network
+    environment:
+      - TZ=Asia/Seoul
+    depends_on:
+      - fastapi
+  fastapi:
+    container_name: fastapi
+    build: ./fastapi
+    restart: always
+    expose:
+      - "8000"
+    networks:
+      - proxy-network
